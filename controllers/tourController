@@ -1,7 +1,24 @@
 exports.checkId = (req, res, next) => {
-
+    console.log('middleware checkId : ', req.params.id);
+    if (req.params.id * 1 > 5) {
+        return res.status(404).json({
+            status: 'fail',
+            message: 'Invalid tour id'
+        });
+    }
+    next();
 };
 
+exports.checkBody = (req, res, next) => {
+    console.log('middleware checkbody : ', req.body);
+    if (!req.body.name || !req.body.price) {
+        return res.status(400).json({
+            status: 'fail',
+            message: 'Tour name or price is missing'
+        });
+    }
+    next();
+};
 exports.getAllTours = (req, res) => {
     res.status(200).json({
         status: "success",

@@ -6,16 +6,21 @@ const router = express.Router();
 console.log("fffff");
 
 //param middleware
-router.param('id', (req, res, next, val) => {
-    console.log(`Tour id is ${val}`);
-    next();
-});
+// router.param('id', (req, res, next, val) => {
+//     console.log(`Tour id is ${val}`);
+//     next();
+// });
 
+//the above code is replaced by below snippet
+router.param('id', tourController.checkId);
+
+
+//chaining multiple middleware
 
 router
     .route('/')
     .get(tourController.getAllTours)
-    .post(tourController.createTour);
+    .post(tourController.checkBody, tourController.createTour);
 
 router
     .route('/:id')
